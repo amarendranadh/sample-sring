@@ -23,13 +23,17 @@ import com.example.demo.service.impl.ProjectServiceImpl;
 @RequestMapping(path=ProjectConstants.BASE_PATH)
 public class ProjectController {
 	
-	private static final Logger LOGGER = LogManager.getLogger(ProjectController.class.getName());
+	public static Logger LOGGER;
 	
 	@Autowired
 	ProjectServiceImpl projectService;
 	
 	@PostMapping(path="/projects")
 	public ResponseEntity<Project> createProject(@RequestBody ProjectRequest projectRequest) {
+
+	    System.setProperty("log4j.configurationFile", "./resources/config/logger/log4j2.xml");
+	    LOGGER = LogManager.getLogger(ProjectController.class.getName());
+		
 		LOGGER.info("Request for creation of project : " + projectRequest.toString());
 		Project projectResponse = projectService.saveProject(projectRequest);
 		LOGGER.info("Response for creation of project : " + projectResponse.toString());
@@ -38,6 +42,11 @@ public class ProjectController {
 
 	@GetMapping(path="/projects/{projectId}")
 	public ResponseEntity<Project> getProject(@PathVariable long projectId) {
+
+
+	    System.setProperty("log4j.configurationFile", "./resources/config/logger/log4j2.xml");
+	    LOGGER = LogManager.getLogger(ProjectController.class.getName());
+	    
 		LOGGER.info("Request for retrieval of project : " + projectId);
 		Project projectResponse = projectService.getProject(projectId);
 		LOGGER.info("Response for retrieval of project : " + projectResponse.toString());
@@ -46,6 +55,11 @@ public class ProjectController {
 	
 	@GetMapping(path="/projects")
 	public ResponseEntity<List<Project>> getProjects() {
+
+
+	    System.setProperty("log4j.configurationFile", "./resources/config/logger/log4j2.xml");
+	    LOGGER = LogManager.getLogger(ProjectController.class.getName());
+		
 		LOGGER.info("Request for getProjects");
 		List<Project> projectResponses = projectService.getProjects();
 		LOGGER.info("Response for gteProjects : " + projectResponses);
